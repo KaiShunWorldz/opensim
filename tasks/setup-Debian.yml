@@ -1,0 +1,11 @@
+---
+# tasks file for baseline
+- name: Upgrade packages
+  apt: upgrade=safe
+  tags: ['packages']
+
+- name: Install baseline
+  apt: 
+    name: ['git', 'mono-complete'] 
+    state: present
+  tags: ['packages']

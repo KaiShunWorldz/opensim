@@ -1,0 +1,19 @@
+---
+# tasks file for KaiShunWorldz.opensim
+
+- include_tasks: setup-accounts.yml
+- include_tasks: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include_tasks: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- include_tasks: setup-opensim-bin.yml
+
+- include_tasks: setup-opensim-services.yml
+  when: ansible_nodename in "{{ groups['robust'] }}" or
+        ansible_nodename == 'localhost'
+
+- include_tasks: setup-simulator.yml
+  when: ansible_nodename in "{{ groups['simulator'] }}" or
+        ansible_nodename == 'localhost'

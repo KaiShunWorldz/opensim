@@ -1,0 +1,21 @@
+---
+- name: create opensim admin group
+  group: name={{ admin_group }} state=present
+  tags: ['identify', 'configure']
+
+- name: create system users for opensim administration
+  user: name="{{ admin_user }}" group="{{ admin_group }}" shell=/bin/bash
+    update_password=always state=present
+  tags: ['identity', 'configure']
+
+- name: add gridadmin to sudoers
+  lineinfile:
+    path: "/etc/sudoers"
+    state: present
+    regexp: '^{{ admin_user}}'
+    line: '{{ admin_user}} ALL=(ALL) NOPASSWD:ALL'
+  tags: ['authorize', 'configure']
+
+- name: add ssh keys for remote access by this control system
+  authorized_key: user="{{ admin_user }}" key="{{ lookup('file', public_key) }}"
+  tags: ['authenticate', 'configure']

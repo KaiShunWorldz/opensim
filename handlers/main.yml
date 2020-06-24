@@ -1,0 +1,4 @@
+---
+# handlers file for  KaiShunWorldz.opensim
+- name: restart  KaiShunWorldz.opensim
+  service: "name=KaiShunWorldz.opensim state="

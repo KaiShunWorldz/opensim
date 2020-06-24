@@ -1,0 +1,38 @@
+;
+;  ansible_managed
+;
+
+[AssetCache]
+    ;;
+    ;; Options for FlotsamAssetCache
+    ;;
+
+    ; cache directory can be shared by multiple instances
+    CacheDirectory = /home/{{ admin_user }}/assetcache
+
+
+    ; Log level
+    ; 0 - (Error) Errors only
+    ; 1 - (Info)  Hit Rate Stats + Level 0
+    ; 2 - (Debug) Cache Activity (Reads/Writes) + Level 1
+    ;
+    LogLevel = 0
+
+    HitRateDisplay = 100
+    MemoryCacheEnabled = false
+    UpdateFileTimeOnCacheHit = false
+
+    NegativeCacheEnabled = true
+    NegativeCacheTimeout = 120
+    NegativeCacheSliding = false
+
+    FileCacheEnabled = true
+    MemoryCacheTimeout = .016 ; one minute
+    FileCacheTimeout = 48
+    FileCleanupTimer = 0.0  ; disabled
+
+
+    ; WaitOnInprogressTimeout = 3000
+    ;CacheDirectoryTiers = 1
+    ;CacheDirectoryTierLength = 3
+    ;CacheWarnAt = 30000

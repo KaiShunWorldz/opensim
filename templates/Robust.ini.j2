@@ -1,0 +1,220 @@
+;
+; ansible_managed
+;
+
+[Const]
+    BaseURL = "http://{{ ansible_nodename }}"
+    PublicPort = "{{ os_public_port }}"
+    PrivatePort = "{{ os_private_port }}"
+
+[Startup]
+
+    PIDFile = "/tmp/Robust.exe.pid"
+
+    RegistryLocation = "."
+    ConfigDirectory = "/home/{{ admin_user }}/{{ conf_dir }}/robust-include"
+    ConsoleHistoryFileEnabled = true
+    ConsoleHistoryFile = "RobustConsoleHistory.txt"
+
+
+    ConsoleHistoryFileLines = 100
+
+    ; Time stamp commands in history file (default false)
+    ; ConsoleHistoryTimeStamp = false
+
+
+    NoVerifyCertChain = true
+    NoVerifyCertHostname = true
+
+
+[ServiceList]
+{% if ansible_nodename == 'os-asset' %}
+    AssetServiceConnector = "${Const|PrivatePort}/OpenSim.Server.Handlers.dll:AssetServiceConnector"
+    InventoryInConnector = "${Const|PrivatePort}/OpenSim.Server.Handlers.dll:XInventoryInConnector"
+{% endif %}
+
+{% if ansible_nodename == 'os-login' %}
+
+    GridServiceConnector = "${Const|PrivatePort}/OpenSim.Server.Handlers.dll:GridServiceConnector"
+    GridInfoServerInConnector = "${Const|PublicPort}/OpenSim.Server.Handlers.dll:GridInfoServerInConnector"
+    AuthenticationServiceConnector = "${Const|PrivatePort}/OpenSim.Server.Handlers.dll:AuthenticationServiceConnector"
+    OpenIdServerConnector = "${Const|PublicPort}/OpenSim.Server.Handlers.dll:OpenIdServerConnector"
+    AvatarServiceConnector = "${Const|PrivatePort}/OpenSim.Server.Handlers.dll:AvatarServiceConnector"
+    LLLoginServiceInConnector = "${Const|PublicPort}/OpenSim.Server.Handlers.dll:LLLoginServiceInConnector"
+    PresenceServiceConnector = "${Const|PrivatePort}/OpenSim.Server.Handlers.dll:PresenceServiceConnector"
+    UserAccountServiceConnector = "${Const|PrivatePort}/OpenSim.Server.Handlers.dll:UserAccountServiceConnector"
+    GridUserServiceConnector = "${Const|PrivatePort}/OpenSim.Server.Handlers.dll:GridUserServiceConnector"
+    AgentPreferencesServiceConnector = "${Const|PrivatePort}/OpenSim.Server.Handlers.dll:AgentPreferencesServiceConnector"
+    FriendsServiceConnector = "${Const|PrivatePort}/OpenSim.Server.Handlers.dll:FriendsServiceConnector"
+    MapAddServiceConnector = "${Const|PrivatePort}/OpenSim.Server.Handlers.dll:MapAddServiceConnector"
+    MapGetServiceConnector = "${Const|PublicPort}/OpenSim.Server.Handlers.dll:MapGetServiceConnector"
+
+
+    MuteListConnector = "${Const|PrivatePort}/OpenSim.Server.Handlers.dll:MuteListServiceConnector"
+{% endif %}
+
+
+[Network]
+    port = ${Const|PrivatePort}
+
+    AllowllHTTPRequestIn = false
+
+
+
+[AccessControl]
+
+
+
+[DatabaseService]
+
+    StorageProvider = "OpenSim.Data.MySQL.dll"
+    ConnectionString = "Data Source=localhost;Database={{ db_name }};User ID={{ db_user }};Password={{ db_password}};Old Guids=true;SslMode=None"
+
+
+
+{% if ansible_nodename == 'os-asset' %}
+
+[AssetService]
+
+    LocalServiceModule = "OpenSim.Services.AssetService.dll:AssetService"
+    BaseDirectory = "/home/{{ admin_user }}/fsassets/data"
+    SpoolDirectory = "home/{{ admin_user }}/fsassets/tmp"
+
+
+    DefaultAssetLoader = "OpenSim.Framework.AssetLoader.Filesystem.dll"
+    AssetLoaderArgs = "./assets/AssetSets.xml"
+
+    AllowRemoteDelete = false
+    AllowRemoteDeleteAllTypes = false
+
+
+[InventoryService]
+    LocalServiceModule = "OpenSim.Services.InventoryService.dll:XInventoryService"
+
+      AllowDelete = true
+{% endif %}
+
+
+
+{% if ansible_nodename == 'os-login' %}
+[GridService]
+    LocalServiceModule = "OpenSim.Services.GridService.dll:GridService"
+
+    Region_Welcome_Area = "DefaultRegion, FallbackRegion"
+    ExportSupported = true
+
+[FreeswitchService]
+    LocalServiceModule = "OpenSim.Services.FreeswitchService.dll:FreeswitchService"
+
+
+[AuthenticationService]
+    LocalServiceModule = "OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService"
+
+
+
+[OpenIdService]
+    AuthenticationServiceModule = "OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService"
+    UserAccountServiceModule = "OpenSim.Services.UserAccountService.dll:UserAccountService"
+
+
+[UserAccountService]
+    LocalServiceModule = "OpenSim.Services.UserAccountService.dll:UserAccountService"
+
+
+    AuthenticationService = "OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService"
+    PresenceService = "OpenSim.Services.PresenceService.dll:PresenceService"
+    GridService = "OpenSim.Services.GridService.dll:GridService"
+    InventoryService = "OpenSim.Services.InventoryService.dll:XInventoryService"
+    AvatarService = "OpenSim.Services.AvatarService.dll:AvatarService"
+    GridUserService = "OpenSim.Services.UserAccountService.dll:GridUserService"
+
+
+    CreateDefaultAvatarEntries = true
+
+
+[GridUserService]
+    LocalServiceModule = "OpenSim.Services.UserAccountService.dll:GridUserService"
+
+
+[AgentPreferencesService]
+    LocalServiceModule = "OpenSim.Services.UserAccountService.dll:AgentPreferencesService"
+
+
+[PresenceService]
+    LocalServiceModule = "OpenSim.Services.PresenceService.dll:PresenceService"
+
+[AvatarService]
+    LocalServiceModule = "OpenSim.Services.AvatarService.dll:AvatarService"
+
+
+[FriendsService]
+    LocalServiceModule = "OpenSim.Services.FriendsService.dll:FriendsService"
+
+[EstateService]
+    LocalServiceModule = "OpenSim.Services.EstateService.dll:EstateDataService"
+
+[LibraryService]
+    LibraryName = "OpenSim Library"
+    DefaultLibrary = "./inventory/Libraries.xml"
+
+
+[LoginService]
+
+    LocalServiceModule = "OpenSim.Services.LLLoginService.dll:LLLoginService"
+
+    UserAccountService = "OpenSim.Services.UserAccountService.dll:UserAccountService"
+    GridUserService = "OpenSim.Services.UserAccountService.dll:GridUserService"
+    AuthenticationService = "OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService"
+    InventoryService = "OpenSim.Services.InventoryService.dll:XInventoryService"
+    AvatarService = "OpenSim.Services.AvatarService.dll:AvatarService"
+    PresenceService = "OpenSim.Services.PresenceService.dll:PresenceService"
+    GridService = "OpenSim.Services.GridService.dll:GridService"
+    SimulationService ="OpenSim.Services.Connectors.dll:SimulationServiceConnector"
+    LibraryService = "OpenSim.Services.InventoryService.dll:LibraryService"
+    FriendsService = "OpenSim.Services.FriendsService.dll:FriendsService"
+
+
+    MinLoginLevel = 0
+
+    WelcomeMessage = "{{ WelcomeMessage }}"
+    AllowRemoteSetLoginLevel = "false"
+    MapTileURL = "${Const|BaseURL}:${Const|PublicPort}/";
+    DSTZone = "America/Los_Angeles;Pacific Standard Time"
+
+[MapImageService]
+    LocalServiceModule = "OpenSim.Services.MapImageService.dll:MapImageService"
+
+[GridInfoService]
+
+    login = ${Const|BaseURL}:${Const|PublicPort}
+    gridname = "{{ gridname }}"
+    gridnick = "{{ gridnick }}"
+    welcome = ${Const|BaseURL}/welcome
+    economy = ${Const|BaseURL}/economy
+    about = ${Const|BaseURL}/about
+    register = ${Const|BaseURL}/register
+    help = ${Const|BaseURL}/help
+    password = ${Const|BaseURL}/password
+
+[Messaging]
+    OfflineIMService = "OpenSim.Addons.OfflineIM.dll:OfflineIMService"
+
+[Groups]
+    MaxAgentGroups = 42
+
+
+[UserProfilesService]
+    LocalServiceModule = "OpenSim.Services.UserProfilesService.dll:UserProfilesService"
+    Enabled = false
+
+    UserAccountService = OpenSim.Services.UserAccountService.dll:UserAccountService
+    AuthenticationServiceModule = "OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService"
+
+
+[BakedTextureService]
+    LocalServiceModule = "OpenSim.Server.Handlers.dll:XBakes"
+    BaseDirectory = "./bakes"
+
+[MuteListService]
+  LocalServiceModule = "OpenSim.Services.MuteListService.dll:MuteListService"
+{% endif %}

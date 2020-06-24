@@ -1,0 +1,41 @@
+---
+- name: git clone opensim binaries
+  become: yes
+  become_user: "{{ admin_user }}"
+  git:
+    repo: "{{ git_bin }}"
+    dest: "/home/{{ admin_user }}/{{ host_version }}"
+    version: master
+    force: yes
+    accept_hostkey: yes
+    key_file: "/home/{{ admin_user }}/.ssh/id_rsa"
+  tags: ['deploy']
+
+- name: Create configuration folders
+  file: path="/home/{{ admin_user }}/{{ conf_dir }}/config-include" state=directory
+  changed_when: no
+  tags: ['deploy']
+
+- name: unlink existing default opensim binaries
+  file: path="/home/{{ admin_user}}/opensim" state=absent
+  changed_when: no
+  tags: ['deploy']
+
+- name: link to opensim binaries
+  become: yes
+  become_user: "{{ admin_user}} "
+  file:
+    src: "/home/{{ admin_user}}/{{ host_version }}"
+    dest: "/home/{{ admin_user }}/opensim"
+    state: link
+  changed_when: no
+  tags: ['deploy']
+
+- name: add opensim bin folder to path
+  lineinfile:
+    path: "/home/{{ admin_user}}/.bashrc"
+    state: present
+    regexp: 'export PATH=\$PATH:\$HOME\/opensim\/bin'
+    line: 'export PATH=$PATH:$HOME/opensim/bin'
+  changed_when: no
+  tags: ['deploy']

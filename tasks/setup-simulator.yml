@@ -1,0 +1,97 @@
+---
+# tasks file for simulator
+
+- include_tasks: simulator-variables.yml
+
+
+# Configure the simulator ini files
+
+- name: Create region configuration folders
+  file:
+    path: "/home/{{ admin_user }}/{{ conf_dir }}/Regions"
+    state: directory
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+  changed_when: no
+  tags: ['deploy']
+
+- name: Setup OpenSimDefaults.ini
+  template:
+    src: OpenSimDefaults.ini.j2
+    dest: "/home/{{ admin_user}}/opensim/bin/OpenSimDefaults.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
+  tags: ['deploy']
+
+- name: Setup OpenSim.ini
+  template:
+    src: OpenSim.ini.j2
+    dest: "/home/{{ admin_user}}/{{ conf_dir }}/OpenSim.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
+  tags: ['deploy']
+
+- name: Setup Grid.ini file
+  template:
+    src: Grid.ini.j2
+    dest: "/home/{{ admin_user}}/{{ conf_dir }}//config-include/Grid.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
+
+- name: Setup Gridypergrid.ini file
+  template:
+    src: Grid.ini.j2
+    dest: "/home/{{ admin_user}}/{{ conf_dir }}//config-include/GridHypergrid.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
+
+- name: Setup GridCommon.ini file
+  template:
+    src: GridCommon.ini.j2
+    dest: "/home/{{ admin_user}}/{{ conf_dir }}//config-include/GridCommon.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
+  tags: ['deploy']
+
+- name: Setup FlotsamCache.ini
+  template:
+    src: FlotsamCache.ini.j2
+    dest: "/home/{{ admin_user}}/{{ conf_dir }}//config-include/FlotsamCache.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
+  tags: ['deploy']
+
+- name: Setup osslEnable.ini
+  template:
+    src: osslEnable.ini.j2
+    dest: "/home/{{ admin_user}}/{{ conf_dir }}//config-include/osslEnable.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
+  tags: ['deploy']
+
+- name: Generate  regionUUID for Welcome Sim
+  command: uuidgen
+  register: region_uuid
+  changed_when: no
+  tags: ['simulator', 'configure']
+
+- name: UUID
+  debug:
+    msg: "{{ region_uuid }}"
+    verbosity: 2
+  
+- name: Copy Regions.ini file from template into configuration directory.
+  template:
+    src: Regions.ini.j2
+    dest: "/home/{{ admin_user}}/{{ conf_dir }}/Regions/Regions.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
+  tags: ['simulator', 'configure']

@@ -1,0 +1,1543 @@
+;
+; ansible_managed
+;
+
+[Startup]
+    ConsolePrompt = "Region (\R) "
+    ConsoleHistoryFileEnabled = true
+
+    ; Log file location. This can be set to a simple file path
+    ; LogFile = OpenSim.log
+
+    ConsoleHistoryFile = "OpenSimConsoleHistory.txt"
+    ConsoleHistoryFileLines = 100
+    ConsoleHistoryTimeStamp = false
+
+
+    save_crashes = false
+    crash_dir = "crashes"
+    PIDFile = "/tmp/OpenSim.exe.pid"
+    startup_console_commands_file = "startup_commands.txt"
+    shutdown_console_commands_file = "shutdown_commands.txt"
+
+    ; Console commands run every 20 minutes
+    ; timer_Script = "filename"
+
+    ; timer_Interval = 1200
+
+    ; ##
+    ; ## SYSTEM
+    ; ##
+
+    async_call_method = SmartThreadPool
+    MaxPoolThreads = 300
+    JobEngineEnabled = true
+    RegistryLocation = "."
+    ConfigDirectory = "."
+
+    ; ##
+    ; ## CLIENTS
+    ; ##
+
+    clientstack_plugin="OpenSim.Region.ClientStack.LindenUDP.dll"
+
+    ; ##
+    ; ## REGIONS
+    ; ##
+
+    region_info_source = "filesystem"
+    ; region_info_source = "web"
+    ; regionload_regionsdir="C:\somewhere\xmlfiles\"
+    ; regionload_webserver_url = "http://example.com/regions.xml"
+
+
+    allow_regionless = false
+    see_into_region = true
+	; LegacySitOffsets = true
+
+    MaxPrimUndos = 20
+
+    ; NonPhysicalPrimMin!).
+    ; NonPhysicalPrimMin = 0.001
+    NonPhysicalPrimMax = 256
+    ; PhysicalPrimMin = 0.01
+    PhysicalPrimMax = 64
+    ClampPrimSize = false
+    ClampNegativeZ = false
+    LinksetPrims = 0
+    AllowScriptCrossing = true
+
+    TrustBinaries = false
+
+    ;DefaultDrawDistance = 255.0
+
+  	;MaxDrawDistance = 512
+
+
+	;MaxRegionsViewDistance = 255
+	;MinRegionsViewDistance = 96
+
+    InworldRestartShutsDown = false
+
+
+	  Normalized55FPS = true
+
+    FrameTime = 0.0909
+    ; FrameTimeWarnPercent = 60
+    ; FrameTimeCritPercent = 40
+
+    UpdateObjectsEveryNFrames = 1
+
+    UpdateAgentsEveryNFrames = 1
+    UpdateEntityMovementEveryNFrames = 1
+    UpdateCoarseLocationsEveryNFrames = 50
+    UpdatePhysicsEveryNFrames = 1
+    UpdateEventsEveryNFrames = 1
+    UpdateTerrainEveryNFrames = 50
+    UpdateStorageEveryNFrames = 200
+    UpdateTempCleaningEveryNSeconds = 180
+
+    ; ##
+    ; ## PRIM STORAGE
+    ; ##
+
+
+    MinimumTimeBeforePersistenceConsidered = 60
+    MaximumTimeBeforePersistenceConsidered = 600
+
+    ; ##
+    ; ## PHYSICS
+    ; ##
+
+    collidable_prim = true
+    physical_prim = true
+
+
+    meshing = Meshmerizer
+    ;meshing = ZeroMesher
+
+    ; Path to decoded sculpty maps
+    ; Defaults to "j2kDecodeCache
+    ;DecodedSculptMapPath = "j2kDecodeCache"
+
+    ;CacheSculptMaps = true
+
+
+    physics = BulletSim
+    ;physics = modified_BulletX
+    ;physics = OpenDynamicsEngine
+    ;physics = basicphysics
+    ;physics = POS
+
+    ; ##
+    ; ## SCRIPT ENGINE
+    ; ##
+
+
+    DefaultScriptEngine = "XEngine"
+
+
+    ; HttpProxy = "http://proxy.com:8080"
+    ; HttpProxyExceptions = ".mydomain.com;localhost"
+
+    ; ##
+    ; ## EMAIL MODULE
+    ; ##
+
+    ;emailmodule = DefaultEmailModule
+
+    ; ##
+    ; ## ANIMATIONS
+    ; ##
+
+
+    enableflyslow = false
+
+
+
+    ; #
+    ; # statistics
+    ; #
+
+
+    ; LogShowStatsSeconds = 3600
+    Stats_URI = "jsonSimStats"
+
+    ; ManagedStatsRemoteFetchURI = "ManagedStats"
+    ; StartDisabled = false
+
+    ; Image decoding. Use CSJ2K for layer boundary decoding if true,
+    ; OpenJPEG if false
+    ; UseCSJ2K = true
+
+
+    UseTrashOnDelete = True
+
+    ; #
+    ; # Logging
+    ; #
+
+
+    LogOverloads = True
+
+    ; #
+    ; # Telehubs
+    ; #
+
+
+    ; SpawnPointRouting = closest
+    ; TelehubAllowLandmark = false
+
+    ; #
+    ; # SSL certificates validation options
+    ; #
+
+
+    NoVerifyCertChain = true
+    NoVerifyCertHostname = true
+
+
+[Map]
+
+    ;GenerateMaptiles = true
+
+    ;WorldMapModule = "WorldMap"
+    ;BlacklistTimeout = 600
+    ;MaptileRefresh = 0
+    ;MaptileStaticUUID = "00000000-0000-0000-0000-000000000000"
+
+
+    DrawPrimOnMapTile = true
+    TextureOnMapTile = true
+    TexturePrims = true
+    TexturePrimSize = 48
+    RenderMeshes = false
+
+
+	;RenderMaxHeight = 4086
+	;RenderMinHeight = -100
+    ;ShowNPCs = true
+
+[Permissions]
+    ; ##
+    ; ## PERMISSIONS
+    ; ##
+
+    serverside_object_permissions = true
+
+
+    allow_grid_gods = true
+    ;region_owner_is_god = true
+    ;region_manager_is_god = false
+    automatic_gods = false
+    implicit_gods = false
+
+    ; allowed_script_creators = all
+    ; allowed_script_editors = all
+    ; simple_build_permissions = False
+    ;LevelUpload = 0
+
+
+[RegionReady]
+
+    enabled = true
+
+    channel_notify = -800
+    login_disable = true
+    ; alert_uri = "http://myappserver.net/my_handler/"
+
+
+[EstateManagement]
+
+    AllowRegionRestartFromClient = true
+
+    ;IgnoreEstateMinorAccessControl = true;
+    ;IgnoreEstatePaymentAccessControl = true
+
+
+[UserProfiles]
+
+  ; ProfileURL = http://127.0.0.1:9000
+  ; AllowUserProfileWebURLs = true
+
+
+[SMTP]
+    enabled = false
+
+    ;enabled = true
+    ;internal_object_host = lsl.opensim.local
+    ;host_domain_header_from = 127.0.0.1
+    ;SMTP_SERVER_HOSTNAME = 127.0.0.1
+    ;SMTP_SERVER_PORT = 25
+    ;SMTP_SERVER_LOGIN = foo
+    ;SMTP_SERVER_PASSWORD = bar
+
+
+[Network]
+    ConsoleUser = "Test"
+    ConsolePass = "secret"
+    http_listener_port = 9000
+    console_port = 0
+
+    http_listener_ssl = false ; if set to true main server is replaced by a ssl one
+    http_listener_sslport = 9001 ; Use this port for SSL connections
+    http_listener_cn = "myRegionsExternalHostName"
+    http_listener_cert_path = "mycert.p12" ; path for the cert file that is valid for the ExternalHostName
+  	http_listener_cert_pass = "mycertpass" ; the cert passwork
+
+
+    ; https_listener = False
+    ; https_port = 0
+    ; cert_path = "path/to/cert.p12"
+    ; cert_pass = "password"
+
+    ; HttpBodyMaxLenMAX=16384
+    ; ExternalHostNameForLSL=127.0.0.1
+
+
+    OutboundDisallowForUserScripts = 0.0.0.0/8|10.0.0.0/8|100.64.0.0/10|127.0.0.0/8|169.254.0.0/16|172.16.0.0/12|192.0.0.0/24|192.0.2.0/24|192.88.99.0/24|192.168.0.0/16|198.18.0.0/15|198.51.100.0/24|203.0.113.0/24|224.0.0.0/4|240.0.0.0/4|255.255.255.255/32
+
+    ; OutboundDisallowForUserScripts = 0.0.0.0/0
+    ; OutboundDisallowForUserScripts = ""
+
+
+    shard = "OpenSim"
+    ;user_agent = "OpenSim LSL (Mozilla Compatible)"
+
+    ;MaxRequestConcurrency = 30
+
+[ScriptsHttpRequestModule]
+
+	; MaxPoolThreads = 8
+
+    ;PrimRequestsPerSec = 1.0
+    ;PrimRequestsBurst = 3.0
+    ;PrimOwnerRequestsPerSec = 25.0
+    ;PrimOwnerRequestsBurst = 5.0
+    ;RequestsTimeOut = 30000
+
+[AccessControl]
+
+    ; AllowedClients = ""
+    ; DeniedClients = ""
+
+
+[ClientStack.LindenUDP]
+
+    ;scene_throttle_max_bps = 2500000
+    ;client_throttle_max_bps = 187500
+    ;adaptive_throttle_min_bps = 32000
+    ;enable_adaptive_throttles = false
+    ;TextureSendLimit = 20
+    ;DisableFacelights = false
+    ;AckTimeout = 60
+    ;PausedAckTimeout = 300
+	  ;SupportViewerObjectsCache = true
+
+[ClientStack.LindenCaps]
+
+    Cap_AttachmentResources = ""
+    Cap_ChatSessionRequest = ""
+    Cap_CopyInventoryFromNotecard = "localhost"
+    Cap_DispatchRegionInfo = ""
+    Cap_EstateAccess = "localhost"
+    Cap_EstateChangeInfo = "localhost"
+    Cap_EnvironmentSettings = "localhost"
+    Cap_EventQueueGet = "localhost"
+    Cap_FetchInventory = ""
+    Cap_ObjectMedia = "localhost"
+    Cap_ObjectMediaNavigate = "localhost"
+    Cap_FetchLib = ""
+    Cap_FetchLibDescendents = ""
+    Cap_GetDisplayNames = "localhost"
+    Cap_GetTexture = "localhost"
+    Cap_GetMesh = "localhost"
+    Cap_GetMesh2 = "localhost"
+    ; Cap_GetAsset = "localhost"  DO not ucoment this line. Some popular viewers still dont do it right for opensim. Here to easy testing
+    Cap_GetObjectCost = ""
+    Cap_GetObjectPhysicsData = ""
+    Cap_GroupProposalBallot = ""
+	  Cap_GroupMemberData = "localhost"
+    Cap_HomeLocation = "localhost"
+    Cap_LandResources = ""
+    Cap_MapLayer = "localhost"
+    Cap_MapLayerGod = "localhost"
+    Cap_NewFileAgentInventory = "localhost"
+    Cap_NewFileAgentInventoryVariablePrice = "localhost"
+    Cap_ObjectAdd = "localhost"
+    Cap_ParcelPropertiesUpdate = "localhost"
+    Cap_ParcelMediaURLFilterList = ""
+    Cap_ParcelNavigateMedia = ""
+    Cap_ParcelVoiceInfoRequest = ""
+    Cap_ProductInfoRequest = ""
+    Cap_ProvisionVoiceAccountRequest = ""
+    Cap_RemoteParcelRequest = "localhost"
+    Cap_RequestTextureDownload = ""
+    Cap_SearchStatRequest = ""
+    Cap_SearchStatTracking = ""
+    Cap_SendPostcard = ""
+    Cap_SendUserReport = ""
+    Cap_SendUserReportWithScreenshot = ""
+    Cap_ServerReleaseNotes = "localhost"
+    Cap_SimConsole = ""
+    Cap_SimulatorFeatures = ""
+    Cap_SetDisplayName = ""
+    Cap_StartGroupProposal = ""
+    Cap_TextureStats = ""
+    Cap_UntrustedSimulatorMessage = ""
+    Cap_UpdateAgentInformation = ""
+    Cap_UpdateAgentLanguage = ""
+    Cap_UpdateGestureAgentInventory = ""
+    Cap_UpdateNotecardAgentInventory = "localhost"
+    Cap_UpdateScriptAgent = "localhost"
+    Cap_UpdateGestureTaskInventory = ""
+    Cap_UpdateNotecardTaskInventory = "localhost"
+    Cap_UpdateScriptTask = "localhost"
+    Cap_UploadBakedTexture = "localhost"
+    Cap_UploadObjectAsset = "localhost"
+    Cap_ViewerStartAuction = ""
+    Cap_ViewerStats = ""
+
+    ;
+    Cap_WebFetchInventoryDescendents = ""
+    Cap_FetchInventoryDescendents2 = "localhost"
+    Cap_FetchInventory2 = "localhost"
+
+    ; Capability for searching for people
+    Cap_AvatarPickerSearch = "localhost"
+
+
+[Chat]
+
+    enabled = true
+    whisper_distance = 10
+    say_distance = 20
+    shout_distance = 100
+
+[EntityTransfer]
+
+    max_distance = 65535
+    AllowAvatarCrossing = true
+	  DisableObjectTransfer = false
+    LevelHGTeleport = 0
+    DisableInterRegionTeleportCancellation = false
+  	LandingPointBehavior = LandingPointBehavior_OS
+
+
+[Messaging]
+
+    InstantMessageModule = InstantMessageModule
+    ; MessageTransferModule = MessageTransferModule
+    ; OfflineMessageModule = OfflineMessageModule
+    ; OfflineMessageURL = http://yourserver/Offline.php
+    ; MuteListModule = MuteListModule
+    ; MuteListURL = http://yourserver/Mute.php
+
+
+[Inventory]
+    CoalesceMultipleObjectsToInventory = true
+
+
+[Appearance]
+
+    PersistBakedTextures = false
+    DelayBeforeAppearanceSave = 5
+    DelayBeforeAppearanceSend = 2
+    ResendAppearanceUpdates = false
+    ReuseTextures = false
+
+
+[Attachments]
+
+    Enabled = true
+
+    ;WearReplacesAll = true
+
+
+[Mesh]
+
+    AllowMeshUpload = true
+
+    ;LevelUpload = 0
+    ;UseMeshiesPhysicsMesh = true
+    ;ConvexPrims = true
+    ;ConvexSculpts = true
+
+    ;MeshFileCache = true
+    ;MeshFileCachePath = MeshCache
+    ;MeshFileCacheDoExpire = true
+    ;MeshFileCacheExpireHours = 48
+
+
+
+[Textures]
+
+    ReuseDynamicTextures = false
+    ReuseDynamicLowDataTextures = false
+
+
+[ODEPhysicsSettings]
+
+
+    collect_stats = false
+
+    ; ##
+    ; ## Physics logging settings - logfiles are saved to *.DIF files
+    ; ##
+
+    ; default is false
+    ;physics_logging = true
+    ;physics_logging_interval = 50
+    ;physics_logging_append_existing_logfile = true
+
+    ;##
+    ;## World Settings
+    ;##
+    world_gravityx = 0
+    world_gravityy = 0
+    world_gravityz = -9.8
+
+    avatar_terminal_velocity = 54
+
+
+    world_stepsize = 0.01818
+    world_solver_iterations = 10
+    world_hashspace_level_low = -5
+    world_hashSpace_level_high = 12
+
+    meters_in_small_space = 29.9
+
+
+    ; ##
+    ; ## Contact properties. (the stuff that happens when things come in contact with each other)
+    ; ##
+
+
+    world_contact_surface_layer = 0.001
+    filter_collisions = false
+
+    nm_terraincontact_friction = 255.0
+    nm_terraincontact_bounce = 0.1
+    nm_terraincontact_erp = 0.1025
+
+    m_terraincontact_friction = 75.0
+    m_terraincontact_bounce = 0.05
+    m_terrainContact_erp = 0.05025
+
+    m_avatarobjectcontact_friction = 75.0
+    m_avatarobjectcontact_bounce = 0.1
+
+    objectcontact_friction = 250.0
+    objectcontact_bounce = 0.2
+
+    ; ##
+    ; ## Avatar Control
+    ; ##
+
+
+
+    av_pid_derivative = 2200.0
+    av_pid_proportional = 900.0
+    av_capsule_radius = 0.37
+    av_capsule_standup_tensor = 550000
+    av_capsule_tilted = false
+
+    ; av_density * AVvolume;
+    av_density = 80
+    ; av_height_fudge_factor = 0.52
+    av_movement_divisor_walk = 1.3
+    av_movement_divisor_run = 0.8
+
+    minimum_ground_flight_offset = 3.0
+    av_planted = false
+    av_av_collisions_off = false
+
+    ; ##
+    ; ## Object options
+    ; ##
+
+
+    geometry_default_density = 10.000006836
+    body_frames_auto_disable = 20
+    body_pid_derivative = 35
+    body_pid_gain = 25
+    contacts_per_collision = 80
+    geom_contactpoints_start_throttling = 3
+    geom_updates_before_throttled_update = 15
+    maximum_mass_object = 10000.01
+
+    ; ##
+    ; ## Sculpted Prim settings
+    ; ##
+
+    mesh_sculpted_prim = true
+    mesh_lod = 32
+    mesh_physical_lod = 16
+
+    ; ##
+    ; ## additional meshing options
+    ; ##
+
+
+    ; (ubOde only)
+    ; MinSizeToMeshmerize = 0.1
+
+
+[BulletSim]
+
+    BulletEngine = "bulletunmanaged"
+    ; BulletEngine = "bulletxna"
+
+    UseSeparatePhysicsThread = false
+    TerrainImplementation = 0
+    TerrainMeshMagnification = 2
+    AvatarToAvatarCollisionsByDefault = true
+    AvatarHeightLowFudge = 0      ; Adjustment at low end of height range
+    AvatarHeightMidFudge = 0      ; Adjustment at mid point of avatar height range
+    AvatarHeightHighFudge = 0     ; Adjustment at high end of height range
+
+
+    ;AvatarStepHeight = 0.6              ; The height, below which is considered a step collision.
+    ;AvatarStepAngle = 0.3               ; The angle from vertical (in radians) to consider a surface a step
+    ;AvatarStepApproachFactor = 2        ; Approach angle factor. O=straight on, .6=~45 degrees.
+    ;AvatarStepGroundFudge = 0.1         ; Fudge added to bottom of avatar below which step collisions happen
+    ;AvatarStepForceFactor = 0           ; Avatar is pushed up by its mass times this factor
+    ;AvatarStepUpCorrectionFactor = 0.8  ; Avatar is displaced up the collision height times this factor
+    ;AvatarStepSmoothingSteps = 1        ; Number of frames after a step collision that up correction is applied
+
+
+    AvatarTerminalVelocity = -54
+
+    LinkImplementation = 1      ; 0=constraint, 1=compound
+    LinksetOffsetCenterOfMass = false
+    MeshSculptedPrim = true
+    ForceSimplePrimMeshing = false
+    ShouldRemoveZeroWidthTriangles = true
+    ShouldUseAssetHulls = true
+
+    MaxCollisionsPerFrame = 2048
+    MaxUpdatesPerFrame = 8192
+
+    PhysicsLoggingEnabled = False
+    PhysicsLoggingDir = "."
+    VehicleLoggingEnabled = False
+
+
+[RemoteAdmin]
+    enabled = false
+
+    port = 0
+    bind_ip_address = "0.0.0.0"
+    access_password = unknown
+
+
+    ; access_ip_addresses = 0.0.0.0, 0.0.0.0 ...
+    ; access_ip_addresses =
+
+
+    create_region_enable_voice = false
+    create_region_public = false
+
+    region_file_template = "{0}x{1}-{2}.ini"
+    ;region_limit = 0
+
+
+    enabled_methods = all
+    ;default_male = Default Male
+    ;default_female = Default Female
+
+    ;copy_folders = false
+
+    ;default_appearance = default_appearance.xml
+
+
+; RestPlugins are not currently operational.
+;[RestPlugins]
+;    ; Change this to true to enable REST Plugins. This must be true if you wish to use
+;    ; REST Region or REST Asset and Inventory Plugins
+;    enabled = false
+;    god_key = SECRET
+;    prefix = /admin
+
+
+;[RestRegionPlugin]
+;    ; Change this to true to enable the REST Region Plugin
+;    enabled = false
+
+
+;[RestHandler]
+;    ; Change this to true to enable the REST Asset and Inventory Plugin
+;    enabled = false
+;    authenticate = true
+;    secured = true
+;    extended-escape = true
+;    realm = OpenSim REST
+;    dump-asset = false
+;    path-fill = true
+;    dump-line-size = 32
+;    flush-on-error = true
+
+
+; IRC bridge is experimental, so if it breaks... keep both parts... yada yada
+; also, not good error detection when it fails
+[IRC]
+    enabled = false; you need to set this to true otherwise it won't connect
+
+
+
+[Sun]
+    ; number of wall clock hours for an opensim day.  24.0 would mean realtime
+    ;day_length = 4
+    ; Year length in days
+    ;year_length = 60
+    ; Day to Night Ratio
+    ;day_night_offset = 0.45
+    ; send a Sun update every update_interval # of frames.  A lower number will
+    ; make for smoother sun transition at the cost of network
+    ;update_interval = 100
+
+
+[Wind]
+
+    enabled = true
+
+    wind_update_rate = 150
+    wind_plugin = SimpleRandomWind
+
+    ; These settings are specific to the ConfigurableWind plugin
+    ; To use ConfigurableWind as the default, simply change wind_plugin to ConfigurableWind and uncomment the following.
+    ; avg_strength  = 5.0
+    ; avg_direction = 0.0
+    ; var_strength  = 0.0
+    ; var_direction = 0.0
+    ; rate_change   = 1.0
+
+    ; This setting is specific to the SimpleRandomWind plugin
+    ; Adjusts wind strength. 0.0 = no wind, 1.0 = normal wind.  Default is 1.0
+    strength = 1.0
+
+
+[Cloud]
+    ; Enable this to generate classic particle clouds above the sim.
+    ; default is disabled - turn it on here
+    enabled = false
+
+    ; Density of cloud cover 0.0 to 1.0 Defult 0.5
+    density = 0.5
+
+    ; update interval for the cloud cover data returned by llCloud().
+    ; default is 1000
+    cloud_update_rate = 1000
+
+
+[LightShare]
+    ; This enables the transmission of Windlight scenes to supporting clients, such as the Meta7 viewer.
+    ; It has no ill effect on viewers which do not support server-side windlight settings.
+    enable_windlight = false
+
+
+[Trees]
+    ; enable the trees module. default true
+    enabled = true
+
+    ; active_trees allows module to change its trees in time.
+    ; some will be deleted, others created and rest may grow
+    ; default is false. You can change it with console command tree active true | false later
+    active_trees = false
+    ; the trees change execution time rate (in ms)
+    update_rate = 1000
+
+    ; allow the trees to grow.
+    ; DANGER
+    ; this option causes high network use on the order of
+    ; NumberOfTrees * NumberAvatars * 1000 / update_rate udp packets per second
+    allowGrow = false
+
+[VectorRender]
+    ; the font to use for rendering text (default: Arial)
+    ; font_name = "Arial"
+
+
+[LL-Functions]
+    ; Set the following to true to allow administrator owned scripts to execute console commands
+    ; currently unused
+    ; AllowosConsoleCommand=false
+
+    ; Are god functions such as llSetObjectPermMask() allowed?  If true then gods and only gods have access to these functions.
+    ; If false then gods cannot execute these functions either.
+    AllowGodFunctions = false
+
+    ; Restrict the email address used by llEmail to the address associated with the avatars user account?
+    ; If true then llEmail will only send email to the address in the user account of the avatar who owns the object containing the script.
+    ; If false then email may be sent to any valid email address.
+    RestrictEmail = false
+
+    ; Maximum number of llListen events we allow over the entire region.
+    ; Set this to 0 to have no limit imposed
+    max_listens_per_region = 1000
+
+    ; Maximum number of llListen events we allow per script
+    ; Set this to 0 to have no limit imposed.
+    max_listens_per_script = 64
+
+    ; Maximum number of external urls that scripts can set up in this simulator (e.g. via llRequestURL())
+    max_external_urls_per_simulator = 100
+
+    ; Use size boxes instead of meshed prims, sculpts and mesh when calculating bounding boxes.
+    ; Speeds up calculations but can make them inaccurate, in some cases very inaccurate.
+    UseSimpleBoxesInGetBoundingBox = false
+
+    ; Add a third vector with stats when returning results from llGetBoundingBox.
+    ; Lists objects (groups), prims/meshes/avatars (parts) and vertices rendered.
+    AddStatsInGetBoundingBox = false
+
+    ; Avatar bounding box, lower X value, constant part, when standing
+    LowerAvatarBoundingBoxStandingXconst = -0.275
+
+    ; Avatar bounding box, upper X value, constant part, when standing
+    UpperAvatarBoundingBoxStandingXconst = 0.275
+
+    ; Avatar bounding box, lower Y value, constant part, when standing
+    LowerAvatarBoundingBoxStandingYconst = -0.35
+
+    ; Avatar bounding box, upper Y value, constant part, when standing
+    UpperAvatarBoundingBoxStandingYconst = 0.35
+
+    ; Avatar bounding box, lower Z value, constant part, when standing
+    LowerAvatarBoundingBoxStandingZconst = -0.1
+
+    ; Avatar bounding box, lower Z value, coefficient to multiply with avatar height, when standing
+    LowerAvatarBoundingBoxStandingZcoeff = -0.5
+
+    ; Avatar bounding box, upper Z value, constant part, when standing
+    UpperAvatarBoundingBoxStandingZconst = 0.1
+
+    ; Avatar bounding box, upper Z value, coefficient to multiply with avatar height, when standing
+    UpperAvatarBoundingBoxStandingZcoeff = 0.5
+
+    ; Avatar bounding box, lower X value, constant part, when groundsitting
+    LowerAvatarBoundingBoxGroundsittingXconst = -0.3875
+
+    ; Avatar bounding box, upper X value, constant part, when groundsitting
+    UpperAvatarBoundingBoxGroundsittingXconst = 0.3875
+
+    ; Avatar bounding box, lower Y value, constant part, when groundsitting
+    LowerAvatarBoundingBoxGroundsittingYconst = -0.5
+
+    ; Avatar bounding box, upper Y value, constant part, when groundsitting
+    UpperAvatarBoundingBoxGroundsittingYconst = 0.5
+
+    ; Avatar bounding box, lower Z value, constant part, when groundsitting
+    LowerAvatarBoundingBoxGroundsittingZconst = -0.05
+
+    ; Avatar bounding box, lower Z value, coefficient to multiply with avatar height, when groundsitting
+    LowerAvatarBoundingBoxGroundsittingZcoeff = -0.375
+
+    ; Avatar bounding box, upper Z value, constant part, when groundsitting
+    UpperAvatarBoundingBoxGroundsittingZconst = 0.5
+
+    ; Avatar bounding box, upper Z value, coefficient to multiply with avatar height, when groundsitting
+    UpperAvatarBoundingBoxGroundsittingZcoeff = 0.0
+
+    ; Avatar bounding box, lower X value, constant part, when sitting
+    LowerAvatarBoundingBoxSittingXconst = -0.5875
+
+    ; Avatar bounding box, upper X value, constant part, when sitting
+    UpperAvatarBoundingBoxSittingXconst = 0.1875
+
+    ; Avatar bounding box, lower Y value, constant part, when sitting
+    LowerAvatarBoundingBoxSittingYconst = -0.35
+
+    ; Avatar bounding box, upper Y value, constant part, when sitting
+    UpperAvatarBoundingBoxSittingYconst = 0.35
+
+    ; Avatar bounding box, lower Z value, constant part, when sitting
+    LowerAvatarBoundingBoxSittingZconst = -0.35
+
+    ; Avatar bounding box, lower Z value, coefficient to multiply with avatar height, when sitting
+    LowerAvatarBoundingBoxSittingZcoeff = -0.375
+
+    ; Avatar bounding box, upper Z value, constant part, when sitting
+    UpperAvatarBoundingBoxSittingZconst = -0.25
+
+    ; Avatar bounding box, upper Z value, coefficient to multiply with avatar height, when sitting
+    UpperAvatarBoundingBoxSittingZcoeff = 0.25
+
+    ; Safety coefficient for max bounding box from prim size box X coordinate
+    ; Worst case is twisted and sheared box, 1+sqrt(2)
+    PrimBoundingBoxSafetyCoefficientX = 2.414214
+
+    ; Safety coefficient for max bounding box from prim size box Y coordinate
+    ; Worst case is twisted and sheared box, 1+sqrt(2)
+    PrimBoundingBoxSafetyCoefficientY = 2.414214
+
+    ; Safety coefficient for max bounding box from prim size box Z coordinate
+    ; Worst case is twisted tube, 0.5+sqrt(1.25)
+    PrimBoundingBoxSafetyCoefficientZ = 1.618034
+
+    ; Use llCastRay V3 if true.
+    ; Implements llCastRay similar but not identical to Second Life.
+    ; See http://wiki.secondlife.com/wiki/LlCastRay .
+    ; NEW
+    ; Meshes prims for good accuracy in ray hit detection,
+    ; handling basic and tortured prims, sculpts and meshes.
+    ; Uses ellipsoid, correctly sized avatar capsules.
+    ; Handles complex terrain, multi-prim objects and seated avatars.
+    ; Implements throttling and the status codes
+    ; RCERR_UNKNOWN and RCERR_CAST_TIME_EXCEEDED,
+    ; so LSL scripts need to handle these responses and RCERR_SIM_PERF_LOW.
+    ; WARNING
+    ; Can be faster on some servers and scenes, but slower on others,
+    ; compared to previous version of llCastRay in OpenSimulator.
+    ; Is in most cases considerably slower than llCastRay in Second Life.
+    ; Generates geometry meshes and can therefore use much system resources.
+    UseLlCastRayV3 = false
+
+    ; Accepted calculation precision error in calculations in llCastRay V3
+    FloatToleranceInLlCastRay = 0.00001
+
+    ; Accepted distance difference between duplicate hits in llCastRay V3
+    FloatTolerance2InLlCastRay = 0.001
+
+    ; Detail level when rendering prims in llCastRay V3
+    ; 0 = Low, 1 = Medium, 2 = High, 3 = Highest, higer level gives better accuracy but slower call
+    PrimDetailLevelInLlCastRay = 1
+
+    ; Detail level when rendering sculpts in llCastRay V3
+    ; 0 = Low, 1 = Medium, 2 = High, 3 = Highest, higer level gives better accuracy but slower call
+    SculptDetailLevelInLlCastRay = 1
+
+    ; Detail level when rendering meshes in llCastRay V3
+    ; 0 = Low, 1 = Medium, 2 = High, 3 = Highest, higer level gives better accuracy but slower call
+    MeshDetailLevelInLlCastRay = 3
+
+    ; Detail level when rendering avatar capsules in llCastRay V3
+    ; 0 = Low, 1 = Medium, 2 = High, 3 = Highest, higer level gives better accuracy but slower call
+    AvatarDetailLevelInLlCastRay = 1
+
+    ; Maximum number of returned hits from llCastRay V3
+    MaxHitsInLlCastRay = 16
+
+    ; Maximum number of returned hits per prim from llCastRay V3
+    MaxHitsPerPrimInLlCastRay = 16
+
+    ; Maximum number of returned hits per object from llCastRay V3
+    MaxHitsPerObjectInLlCastRay = 16
+
+    ; Report ray intersections with surfaces on exits from a prim as hits in llCastRay V3 if true
+    DetectExitHitsInLlCastRay = false
+
+    ; Detect attachments in llCastRay V3 if true
+    DoAttachmentsInLlCastRay = false
+
+    ; Throttle period length in ms before which all old llCastRay use is discarded in llCastRay V3
+    ; The sum of AvailableTimeInMsPerRegionInLlCastRay and all AvailableTimeInMsPerAvatarInLlCastRay should not exceed this
+    ThrottleTimeInMsInLlCastRay = 200
+
+    ; Available time in ms for llCastRay per throttle period and 65536 m2 land area in llCastRay V3
+    AvailableTimeInMsPerRegionInLlCastRay = 40
+
+    ; Available time in ms for llCastRay per throttle period and avatar when script in attachment or vehicle in llCastRay V3
+    AvailableTimeInMsPerAvatarInLlCastRay = 10
+
+    ; Required available time in ms left to perform a new llCastRay in llCastRay V3
+    RequiredAvailableTimeInMsInLlCastRay = 2
+
+    ; Maximum available time in ms possible in llCastRay V3, not to get too high values with varregions
+    MaximumAvailableTimeInMsInLlCastRay = 40
+
+    ; Use cached meshes in llCastRay V3 if true
+    ; Improves performance but uses more memory
+    UseMeshCacheInLlCastRay = true
+
+
+[DataSnapshot]
+    ; The following set of configs pertains to search.
+    ; Set index_sims to true to enable search engines to index your searchable data
+    ; If false, no data will be exposed, DataSnapshot module will be off, and you can ignore the rest of these search-related configs
+    ; default is false
+    index_sims = false
+
+    ; The variable data_exposure controls what the regions expose:
+    ;    minimum: exposes only things explicitly marked for search
+    ;    all: exposes everything
+    data_exposure = minimum
+
+    ; If search is on, change this to your grid name; will be ignored for standalones
+    gridname = "{{ gridname }}"
+
+    ; Period between data snapshots, in seconds. 20 minutes, for starters, so that you see the initial changes fast.
+    ; Later, you may want to increase this to 3600 (1 hour) or more
+    default_snapshot_period = 1200
+
+    ; This will be created in bin, if it doesn't exist already. It will hold the data snapshots.
+    snapshot_cache_directory = "DataSnapshot"
+
+    ; Uncomment if you want to index your data with this and/or other search providers. One entry per
+    ; data service
+    ;DATA_SRV_MISearch = "http://metaverseink.com/cgi-bin/register.py"
+
+
+[Economy]
+    ; the economy module in use
+    ; default is the provided BetaGridLikeMoneyModule
+    ; The default economy module only implements just enough to allow free actions (transfer of objects, etc).
+    ; There is no intention to implement anything further in core OpenSimulator.
+    ; This functionality has to be provided by third party modules.
+    ; economymodule = BetaGridLikeMoneyModule
+
+    ; Economy values get used in the BetaGridLikeMoneyModule.
+
+    ;; Enables selling things for $0.  Default is true.
+    ; SellEnabled = true
+
+    ;; Money Unit fee to upload textures, animations etc.  Default is 0.
+    ;PriceUpload = 0
+
+    ;; Money Unit fee to create groups.  Default is 0.
+    ;PriceGroupCreate = 0
+
+    ; We don't really know what the rest of these values do.  These get sent to the client
+    ; These taken from Agni at a Public Telehub.  Change at your own risk.
+    ;ObjectCount = 0
+    ;PriceEnergyUnit = 0
+    ;PriceObjectClaim = 0
+    ;PricePublicObjectDecay = 0
+    ;PricePublicObjectDelete = 0
+    ;PriceParcelClaim = 0
+    ;PriceParcelClaimFactor = 1
+
+    ;PriceRentLight = 0
+    ;TeleportMinPrice = 0
+    ;TeleportPriceExponent = 2
+    ;EnergyEfficiency = 1
+    ;PriceObjectRent = 0
+    ;PriceObjectScaleFactor = 10
+    ;PriceParcelRent = 0
+
+	; Mesh upload settings, independent of economymodule
+
+	; Create inventory entries for textures uploaded with a model
+	; default is false, ie, do not create
+	; MeshModelAllowTextureToInventory = true
+
+
+[YEngine]
+    ;; implements non preemptive microthreading, so fixing problems like llSleep or long events handlers
+    ;; but those will suffer from timeslicing, so will be slower.
+    ;; warning: scripts state is lost on TP or cross to Xengine regions (cars stop, etc)
+    ;; ignore its extensions (subset of original XMRengine), those are still undefined.
+    ;Enabled = false
+
+    ; maximum stack a script can use in KB
+    ;ScriptStackSize = 2048
+
+    ; maximum heap memory a script can use in KB
+    ;ScriptHeapSize = 1024
+
+    ; number of threads to execute script. Too many threads can have negative impact on other region operations
+    ;NumThreadScriptWorkers = 2
+
+    ; Priority of those threads (Lowest, BelowNormal, Normal, AboveNormal or Highest). Higher priorit can have negative impact on other region operations
+    ;Priority = Normal
+
+    ; to reuse binary compare sources using a hash codes of them or full text
+    UseSourceHashCode = true
+
+    MinTimerInterval = 0.1
+
+    ; scripts states and cache parent folder location
+    ;ScriptBasePath="ScriptEngines"
+
+
+[XEngine]
+    ; Enable this engine in this OpenSim instance
+    Enabled = true
+
+    ; How many threads to keep alive even if nothing is happening
+    MinThreads = 2
+
+    ; How many threads to start at maximum load
+    MaxThreads = 100
+
+    ; Time a thread must be idle (in seconds) before it dies
+    IdleTimeout = 60
+
+    ; Thread priority ("Lowest", "BelowNormal", "Normal", "AboveNormal", "Highest")
+    Priority = "BelowNormal"
+
+    ; Maximum number of events to queue for a script (excluding timers)
+    MaxScriptEventQueue = 300
+
+    ; Stack size per thread created
+    ThreadStackSize = 262144
+
+    ; Set this to true to load each script into a separate
+    ; AppDomain. Setting this to false will load all script assemblies into the
+    ; current AppDomain, which will reduce the per-script overhead but deleted scripts stay inactive using memory
+    ; this may only be a problem if regions stay alive for a long time with lots of scripts added or edited.
+    ; at this time some mono versions seem to have problems with the true option
+    ; so default is now false until a fix is found
+    ; AppDomainLoading = false
+
+    ; Controls whether previously compiled scripts DLLs are deleted on sim restart.
+    ; If you set this to false then startup will be considerably faster since scripts won't need to be recompiled.
+    ; It should be true on first run after updating opensim binary version
+    ; after first run you can change to false.
+    ; You can also set it to false and delete the script DLLs by hand
+    ; This does not delete cached scripts state.
+    ; DeleteScriptsOnStartup = true
+
+    ; CompactMemOnLoad
+    ; forces calls to memory garbage collector before loading each script DLL during region startup.
+    ; Peak memory usage is reduced and region starts with a more compacted memory allocation.
+    ; But this costs a lot of time, so region load will take a lot longer.
+    ; it is more usefull if there are no previously compiled scripts DLLs (or DeleteScriptsOnStartup = true)
+    ; CompactMemOnLoad = false
+
+    ; Controls whether scripts are stopped by aborting their threads externally (abort)
+    ; or by co-operative checks inserted by OpenSimulator into compiled script (co-op).
+    ; co-op will be more stable as aborting threads can cause instability.
+    ; abort was the default option in OpenSimulator 0.8 and before.
+    ; If this setting is changed between co-op and abort, then existing scripts will automatically be recompiled if necessary.
+    ; However, the setting change will not take affect until the next time you restart the simulator.
+    ; Setting changes will not affect state information stored for scripts.
+    ScriptStopStrategy = co-op
+
+    ; Rate to poll for asynchronous command replies (ms)
+    ; currently unused
+    ;AsyncLLCommandLoopms = 50
+
+    ; Save the source of all compiled scripts
+    WriteScriptSourceToDebugFile = false
+
+    ; Compile debug info (line numbers) into the script assemblies
+    CompileWithDebugInformation = true
+
+    ; Allow the user of mod* functions.  This allows a script to pass messages
+    ; to a region module via the modSendCommand() function
+    ; Default is false
+    AllowMODFunctions = false
+
+    ; Allow the use of os* functions (some are dangerous)
+    AllowOSFunctions = false
+
+    ; Allow the user of LightShare functions
+    AllowLightShareFunctions = false
+
+    ; Threat level to allow, one of None, VeryLow, Low, Moderate, High, VeryHigh, Severe
+    OSFunctionThreatLevel = VeryLow
+
+    ; OS Functions enable/disable
+    ; For each function, you can add one line, as shown
+    ; The default for all functions allows them if below threat level
+
+    ; true allows the use of the function unconditionally
+    ; Allow_osSetRegionWaterHeight = true
+
+    ; false disables the function completely
+    ; Allow_osSetRegionWaterHeight = false
+
+    ; Comma separated list of UUIDS allows the function for that list of UUIDS
+    ; Allow_osSetRegionWaterHeight = 888760cb-a3cf-43ac-8ea4-8732fd3ee2bb
+
+    ; Comma separated list of owner classes that allow the function for a particular class of owners. Choices are
+    ; - PARCEL_GROUP_MEMBER: allow if objectgroup is the same group as the parcel
+    ; - PARCEL_OWNER: allow if the objectowner is parcelowner
+    ; - ESTATE_MANAGER: allow if the object owner is a estate manager
+    ; - ESTATE_OWNER: allow if objectowner is estateowner
+    ; Allow_osSetRegionWaterHeight = 888760cb-a3cf-43ac-8ea4-8732fd3ee2bb, PARCEL_OWNER, ESTATE_OWNER>, ...
+
+    ; You can also use script creators as the uuid
+    ; Creators_osSetRegionWaterHeight = <uuid>, ...
+
+    ; If both Allow_ and Creators_ are given, effective permissions
+    ; are the union of the two.
+
+    ; Interval (s) between background save of script states
+    SaveInterval = 120
+
+    ; Interval (s) between maintenance runs (0 = disable)
+    MaintenanceInterval = 10
+
+    ; Time a script can spend in an event handler before it is interrupted
+    EventLimit = 30
+
+    ; If a script overruns it's event limit, kill the script?
+    KillTimedOutScripts = false
+
+    ; Amount of time in milliseconds we will wait for an event to completely normally when a script stop is requested
+    ; before aborting the thread (such as when an object containing scripts is taken into inventory).
+    WaitForEventCompletionOnScriptStop = 1000
+
+    ; Sets the multiplier for the scripting delays
+    ScriptDelayFactor = 1.0
+
+    ; The factor the 10 m distances llimits are multiplied by
+    ScriptDistanceLimitFactor = 1.0
+
+    ; Maximum length of notecard line read
+    ; Increasing this to large values potentially opens
+    ; up the system to malicious scripters
+    ; NotecardLineReadCharsMax = 255
+
+    ; Minimum settable timer interval. Any timer setting less than this is
+    ; rounded up to this minimum interval.
+    ; MinTimerInterval = 0.5
+
+    ; Sensor settings
+    SensorMaxRange = 96.0
+    SensorMaxResults = 16
+
+    ; Allow for llCreateLink and llBreakLink to work without asking for permission
+    ; only enable this in a trusted environment otherwise you may be subject to hijacking
+    ; AutomaticLinkPermission = false
+
+    ; Disable underground movement of prims (default true); set to
+    ; false to allow script controlled underground positioning of
+    ; prims
+    ; DisableUndergroundMovement = true
+
+    ;; Path to script assemblies
+    ; ScriptEnginesPath = "ScriptEngines"
+
+
+[Concierge]
+    ; Enable concierge module
+    ; Default is false
+    enabled = false
+
+    ; name of the concierge
+    whoami = "jeeves"
+
+    ; password for updating the welcome message templates via XmlRpc
+    password = SECRET
+
+    ; regex specifying for which regions concierge service is desired; if
+    ; empty, then for all
+    ;regions = "^MeetingSpace-"
+    regions = ""
+
+    ; for each region that matches the regions regexp you can provide
+    ; (optionally) a welcome template using format substitution:
+    ; {0} is replaced with the name of the avatar entering the region
+    ; {1} is replaced with the name of the region
+    ; {2} is replaced with the name of the concierge (whoami variable above)
+
+    ;welcomes = /path/to/welcome/template/directory
+
+    ; Concierge can send attendee lists to an event broker whenever an
+    ; avatar enters or leaves a concierged region. the URL is subject
+    ; to format substitution:
+    ; {0} is replaced with the region's name
+    ; {1} is replaced with the region's UUID
+    ;broker = "http://broker.place.com/{1}"
+
+
+[Hypergrid]
+    ; Keep it false for now. Making it true requires the use of a special client in order to access inventory
+    safemode = false
+
+
+[VivoxVoice]
+    ; The VivoxVoice module will allow you to provide voice on your
+    ; region(s). It uses the same voice technology as the LL grid and
+    ; works with recent LL clients (we have tested 1.22.9.110075, so
+    ; anything later ought to be fine as well).
+    ;
+    ; For this to work you need to obtain an admin account from Vivox
+    ; that allows you to create voice accounts and region channels.
+
+    enabled = false
+
+    ; vivox voice server
+    vivox_server = www.foobar.vivox.com
+
+    ; vivox SIP URI
+    vivox_sip_uri = foobar.vivox.com
+
+    ; vivox admin user name
+    vivox_admin_user = DeepThroat
+
+    ; vivox admin password
+    vivox_admin_password = VoiceG4te
+
+    ; channel type: "channel" or "positional"
+    ; - positional: spatial sound (default)
+    ; - channel: normal "conference call", no spatial sound
+    ;vivox_channel_type = positional
+
+    ; channel characteristics (unless you know what you are doing, i'd
+    ; leave them as they are --- now you WILL muck around with them,
+    ; huh? sigh)
+
+    ; channel distance model:
+    ; 0 - no attenuation
+    ; 1 - inverse distance attenuation
+    ; 2 - linear attenuation (default)
+    ; 3 - exponential attenuation
+    ;vivox_channel_distance_model = 2
+
+    ; channel mode:
+    ; - "open" (default)
+    ; - "lecture"
+    ; - "presentation"
+    ; - "auditorium"
+    ;vivox_channel_mode = "open"
+
+    ; channel roll off: rate of attenuation
+    ; - a value between 1.0 and 4.0, default is 2.0
+    ;vivox_channel_roll_off = 2.0
+
+    ; channel max range: distance at which channel is silent
+    ; - a value between 0 and 160, default is 80
+    ;vivox_channel_max_range = 80
+
+    ; channel clamping distance: distance before attenuation applies
+    ; - a value between 0 and 160, default is 10
+    ;vivox_channel_clamping_distance = 10
+
+
+[Groups]
+    Enabled = false
+
+    ; This is the current groups stub in Region.CoreModules.Avatar.Groups.  All the other settings below only really
+    ; apply to the Flotsam/SimianGrid GroupsModule
+    Module  = Default
+
+    ; This module can use a PHP XmlRpc server from the Flotsam project at http://code.google.com/p/flotsam/
+    ; or from the SimianGrid project at http://code.google.com/p/openmetaverse
+    ;Module  = GroupsModule
+
+    ; Enable Group Notices
+    ;NoticesEnabled   = true
+
+    ; This makes the Group module very chatty on the console.
+    DebugEnabled     = false
+
+    ; This makes the Groups Messaging module very chatty on the console.
+    DebugMessagingEnabled = false
+
+    ; Groups data is cached for this number of seconds before another request is made to the groups service
+    ; Set to 0 to disable the cache.
+    ; Default is 30 seconds
+    GroupsCacheTimeout = 30
+
+    ; Specify which messaging module to use for groups messaging and if it's enabled
+    ;MessagingModule = GroupsMessagingModule
+    ;MessagingEnabled = true
+
+    ; Experimental option to only message cached online users rather than all users
+    ; Should make large group with few online members messaging faster, at the expense of more calls to ROBUST presence service
+    ; (Flotsam groups only; in V2 this is always on)
+    MessageOnlineUsersOnly = false
+
+    ; Service connectors to the Groups Service.  Select one depending on whether you're using a Flotsam XmlRpc backend or a SimianGrid backend
+
+    ; SimianGrid Service for Groups
+    ;ServicesConnectorModule = SimianGroupsServicesConnector
+    ;GroupsServerURI = http://mygridserver.com:82/Grid/
+
+    ; Flotsam XmlRpc Service for Groups
+    ;ServicesConnectorModule = XmlRpcGroupsServicesConnector
+    ;GroupsServerURI        = http://yourxmlrpcserver.com/xmlrpc.php
+
+    ; XmlRpc Security settings.  These must match those set on your backend groups service if the service is using these keys
+    ;XmlRpcServiceReadKey    = 1234
+    ;XmlRpcServiceWriteKey   = 1234
+
+    ; Disables HTTP Keep-Alive for XmlRpcGroupsServicesConnector HTTP Requests,
+	; only set to false it if you absolute sure regions and groups server support it.
+    ; XmlRpcDisableKeepAlive = true
+
+    ; Minimum user level required to create groups
+    ;LevelGroupCreate = 0
+
+
+[PacketPool]
+    ;RecyclePackets = true
+    ;RecycleDataBlocks = true
+
+    ; If true, then the basic packet objects used to receive data are also recycled, not just the LLUDP packets.
+    ; This reduces data churn
+    RecycleBaseUDPPackets = true
+
+
+[InterestManagement]
+    ; This section controls how state updates are prioritized for each client
+
+    ; UpdatePrioritizationScheme valid values are BestAvatarResponsiveness and SimpleAngularDistance
+	; SimpleAngularDistance does use more cpu
+    UpdatePrioritizationScheme = BestAvatarResponsiveness
+    ReprioritizationEnabled = true
+    ReprioritizationInterval = 2000.0
+    RootReprioritizationDistance = 10.0
+    ChildReprioritizationDistance = 20.0
+
+	; ObjectsCullingByDistance, if true, don't send object updates if outside view range
+	; currently viewers are also told to delete objects that leave view range
+	; only avater position is considered, free camera may not see objects
+	; does increase cpu load
+	ObjectsCullingByDistance = false
+
+    ; If n > 1, only every n UDP terse updates will be sent to observers of an avatar that are in the same region
+    ; Updates will always be sent to the avatar that the update addresses and if av velocity is effectively zero (to prevent drift due to missing updates).
+    ; n > 1 will reduce UDP traffic but will lead to laggier movement observed in other avatars.
+    RootTerseUpdatePeriod = 0
+
+    ; If n > 1, only every n UDP terse updates will be sent to observers of an avatar that are in another region
+    ; n > 1 will reduce UDP traffic but may lead to laggier movement observed in other avatars, though values up to 4 may not generate a noticeable effect.
+    ChildTerseUpdatePeriod = 0
+
+    ; Send an update to clients if the difference from the last sent avatar position is greater than this tolerance
+    RootPositionUpdateTolerance = 0.05
+
+    ; Send an update to clients if the euclidian difference from the last sent avatar rotation is greater than this tolerance
+    RootRotationUpdateTolerance = 0.1
+
+    ; Send an update to clients if the difference from the last sent avatar velocity is greater than this tolerance
+    RootVelocityUpdateTolerance = 0.001
+
+[Monitoring]
+    ; Enable region monitoring
+    ; If true, this will print out an error if more than a minute has passed since the last simulator frame
+    ; Also is another source of region statistics provided via the regionstats URL
+    Enabled = true
+    ; next option may still use framework performance monitors designed for debug only, so avoid it
+    ;ServerStatsEnabled = false
+
+
+[WebStats]
+    ; View region statistics via a web page
+    ; See http://opensimulator.org/wiki/FAQ#Region_Statistics_on_a_Web_Page
+    ; Use a web browser and type in the "Login URI" + "/SStats/"
+    ; For example- http://127.0.0.1:9000/SStats/
+    ; enabled=false
+
+[Statistics]
+	; NumberOfFrames is used in a moving average calculation, where NumberOfFrames is the number of frames
+	; to include in the averaging calculations
+	NumberOfFrames=10
+
+[MediaOnAPrim]
+    ; Enable media on a prim facilities
+    Enabled = true
+
+
+[NPC]
+    ;; Enable Non Player Character (NPC) facilities
+    Enabled = false
+	;; several options to control NPCs creation
+
+	;; allow NPCs to be created not Owned {true false} default: true
+    ; AllowNotOwned = true
+
+	;; allow NPCs to set to be sensed as Avatars {true false} default: true
+    ; AllowSenseAsAvatar = true
+
+	;; allow NPCs to created cloning any avatar in region {true false} default: true
+    ; AllowCloneOtherAvatars = true
+
+	;; if true NPCs will have no group title, if false display "- NPC -" for easy identification {true false} default: true
+    ; NoNPCGroup = true
+
+[Terrain]
+    ; Values can be "pinhead-island" or "flat"
+    InitialTerrain = "pinhead-island"
+    ; If 'true' each avatar is only sent terrain patches within their view distance
+    ; This also changes the region terrain loading from 'lawn mower' to ordered around
+    ;     the avatar outward.
+    SendTerrainUpdatesByViewDistance = True
+
+[LandManagement]
+    ; When editing terrain or objects, parcel layer info is updated in the viewer.
+    ;   This can be expensive for large regions. If this variable is 'true', only the
+    ;   parcel layer data around the area of interest is sent. The parcel layer info
+    ;   is sent for 'ParcelLayerViewDistance' around the interest point.
+    ; If 'ParcelLayerViewDistance' is >= 128, the operation for legacy sized regions
+    ;   will be what it has always been (send the whole region's parcel layer info).
+    ; Other parcel updates (login, changing parcel ownership, ...) will still send
+    ;   whole region.
+    LimitParcelLayerUpdateDistance = true
+    ParcelLayerViewDistance = 128
+
+	; set this to false to not display parcel ban lines
+	ShowParcelBansLines = true
+
+	; Parcel Bans max height above ground. Default 100m
+	; range 20m to 5000m
+	; BanLineSafeHeight = 100
+
+	; setting the parcel to admin content, It works as setting the land to Linden content in SL.
+	; To use it, activate god mode in the viewer, select the parcel and go to: Admin -> Parcel -> Set to Linden Content ( CTRL+ALT+SHIFT+C)
+	; DefaultAdministratorParcelName = "Admin Parcel"
+	; DefaultAdministratorGroupUUID = "00000000-0000-0000-0000-000000000000"
+	; DefaultAdministratorOwnerUUID = "00000000-0000-0000-0000-000000000000"
+
+;;
+;; If you are using a simian grid frontend you can enable
+;; this module to upload tile images for the mapping fn
+;;
+[SimianGridMaptiles]
+    Enabled = False
+    MaptileURL = "http://www.mygrid.com/Grid/"
+    RefreshTime = 3600
+
+
+;;
+;; JsonStore module provides structured store for scripts
+;;
+[JsonStore]
+    Enabled = False
+
+    ;; Enable direct access to the SOP dynamic attributes
+    EnableObjectStore = False
+    MaxStringSpace = 0
+
+
+;;
+;; These are defaults that are overwritten below in [Architecture].
+;; These defaults allow OpenSim to work out of the box with
+;; zero configuration
+;;
+[AssetService]
+    DefaultAssetLoader = "OpenSim.Framework.AssetLoader.Filesystem.dll"
+    AssetLoaderArgs = "assets/AssetSets.xml"
+
+    ; Disable this to prevent the default asset set from being inserted into the
+    ; asset store each time the region starts
+    AssetLoaderEnabled = true
+
+
+[GridService]
+    ;; default standalone, overridable in StandaloneCommon.ini
+    StorageProvider = "OpenSim.Data.Null.dll:NullRegionData"
+
+
+[AutoBackupModule]
+    ;; default is module is disabled at the top level
+    AutoBackupModuleEnabled = false
+
+
+[Sounds]
+    ;; {Module} {} {Implementation of ISoundModule to use.} {OpenSim.Region.CoreModules.dll:SoundModule}
+    Module = OpenSim.Region.CoreModules.dll:SoundModule
+
+    ;; {MaxDistance} {} {Cut-off distance at which sounds will not be sent to users} {100.0}
+    MaxDistance = 100.0
+
+
+[ServiceThrottle]
+    ;; Default time interval (in ms) for the throttle service thread to wake up
+    Interval = 5000
+
+[Dwell]
+    ;; This enables the built in basic dwell module
+    DwellModule = DefaultDwellModule
+
+[ServerReleaseNotes]
+	;; Comment or set to "" to disable
+    ServerReleaseNotesURL = "http://opensimulator.org/wiki/0.9.2.0_Release"
+
+[Modules]
+    Include-modules = "addon-modules/*/config/*.ini"

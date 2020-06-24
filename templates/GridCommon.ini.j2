@@ -1,0 +1,123 @@
+;
+;  ansible_managed
+;
+
+{% if gridmode == "grid" %}
+; This is the main configuration file for an instance of OpenSim running in grid mode
+{% endif %}
+{% if gridmode == "hypergrid" %}
+; This is the main configuration file for an instance of OpenSim running in hypergrid mode
+{% endif %}
+; It is included by Grid.ini
+
+[DatabaseService]
+    StorageProvider = "OpenSim.Data.MySQL.dll"
+    ConnectionString = "Data Source=localhost;Database={{ db_name }};User ID={{ db_user }};Password={{ db_password }};Old Guids=true;SslMode=None"
+
+    ;EstateConnectionString = "Data Source=localhost;Database=simulat;User ID=opensim;Password=***;Old Guids=true;SslMode=None"
+
+
+{% if gridmode  == "hypergrid" %}
+[Hypergrid]
+    HomeURI = "${Const|BaseURL}:${Const|PublicPort}"
+    GatekeeperURI = "${Const|BaseURL}:${Const|PublicPort}"
+
+{% endif %}
+
+[Modules]
+    AssetCaching = "FlotsamAssetCache"
+    Include-FlotsamCache = "/home/{{ admin_user }}/{{ conf_dir }}/config-include/FlotsamCache.ini"
+
+
+[AssetService]
+    DefaultAssetLoader = "OpenSim.Framework.AssetLoader.Filesystem.dll"
+    AssetLoaderArgs = "assets/AssetSets.xml"
+
+    AssetServerURI = "http://{{ asset_node }}:{{ os_private_port }}"
+
+[InventoryService]
+    InventoryServerURI = "http://{{ inventory_node }}:{{ os_private_port}}"
+    ;MaxRetries = 0
+
+[GridInfo]
+    GridInfoURI = "http://{{ grid_node }}:{{ os_public_port }}"
+
+[GridService]
+
+    GridServerURI = "http://{{ grid_node }}:{{ os_private_port}}"
+    ;AllowHypergridMapSearch = true
+    ; MapTileDirectory = "./maptiles"
+
+{% if  gridmode  == "hypergrid" %}
+    Gatekeeper="${Const|BaseURL}:${Const|PublicPort}"
+{% endif %}
+
+[EstateDataStore]
+    ;
+    ; Uncomment if you want centralized estate data at robust server,
+    ; in which case the URL in [EstateService] will be used
+    ;
+    ;LocalServiceModule = "OpenSim.Services.Connectors.dll:EstateDataRemoteConnector"
+
+[EstateService]
+    EstateServerURI = "http://{{ estate_node }}:{{ os_private_port }}"
+
+[Messaging]
+{% if  gridmode  == "hypergrid" %}
+      Gatekeeper = "${Const|BaseURL}:${Const|PublicPort}"
+{% endif %}
+
+[AvatarService]
+    AvatarServerURI = "${{ avatar_node }}:{{ os_private_port }}"
+
+[AgentPreferencesService]
+    AgentPreferencesServerURI = "http://{{ agent_node }}:${Const|PrivatePort}"
+
+[PresenceService]
+    PresenceServerURI = "http://{{ presence_node }}:{{ os_private_port }}"
+
+[UserAccountService]
+    UserAccountServerURI = "http://{{ user_account_node}}:{{ os_private_port }}"
+
+[GridUserService]
+    GridUserServerURI = "http://{{ grid_user_node}}:{{ os_private_port }}"
+
+[AuthenticationService]
+    AuthenticationServerURI = "http://{{ authentication_node }}:{{ os_private_port}}"
+
+[FriendsService]
+    FriendsServerURI = "http://{{ friend_node }}:{{ os_private_port }}"
+
+{% if  gridmode  == "hypergrid" %}
+[HGInventoryAccessModule]
+
+    HomeURI = "${Const|BaseURL}:${Const|PublicPort}"
+    Gatekeeper = "${Const|BaseURL}:${Const|PublicPort}"
+    ; OutboundPermission = True
+    ;RestrictInventoryAccessAbroad = True
+    ; CheckSeparateAssets = false
+    ; RegionHGAssetServerURI = ${Const|BaseURL}:${Const|PublicPort}
+
+
+[HGAssetService]
+    HomeURI = "${Const|BaseURL}:${Const|PublicPort}"
+    ; DisallowExport ="LSLText"
+    ; DisallowImport ="LSLBytecode"
+
+[HGFriendsModule]
+    ;LevelHGFriends = 0;
+
+[UserAgentService]
+    UserAgentServerURI = "${Const|BaseURL}:${Const|PublicPort}"
+{% endif %}
+
+
+[MapImageService]
+    MapImageServerURI = "http://{{ map_node}}:{{ os_private_port }}"
+
+[AuthorizationService]
+    ; Region_Test_1 = "DisallowForeigners"
+
+
+[MuteListService]
+    MuteListServerURI = "http://{{ mute_node }}:{{ os_private_port }}"

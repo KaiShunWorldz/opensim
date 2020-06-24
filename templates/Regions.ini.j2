@@ -1,0 +1,19 @@
+;
+; ansible_managed
+;
+
+
+
+[Default Region]
+
+; *
+; * You don't have to change this! It will be done for you by Ansible!
+; *
+
+RegionUUID = {{ region_uuid.stdout }}
+
+Location = 1000,1000
+InternalAddress = 0.0.0.0
+InternalPort = 9000
+AllowAlternatePorts = False
+ExternalHostName = {{ ansible_nodename }}
