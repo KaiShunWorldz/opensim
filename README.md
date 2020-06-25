@@ -5,7 +5,7 @@
 Title : Ansible playbooks to create a rubust or simulator server
 ================================================================
 
-These role will conforigure a system as either a robust or
+This role will configure a system as either a robust or
 simulator server.
 
 
@@ -66,7 +66,7 @@ db_user: gridadmin
 db_password: gridadmin
 ```
 
-MySQL databse name and credentials opensim hasto use. The creation of the database and its users is not part of this role. That should be done by using a mysql role.
+MySQL database name and credentials opensim has to use. The creation of the database and its users is not part of this role. That should be done by using a mysql role.
 
 
 ```YAML
@@ -88,7 +88,7 @@ The default welcome message, the name of the grid and the short nickname of the 
 ```YAML
 db_name: opensim
 db_user: gridadmin
-db_password: "{{ vault_db_password }}"
+db_password: gridadmin
 ```
 
  
@@ -116,8 +116,8 @@ KaiShun Oleander
 
 eMail  : kaishun@xs4all.nl
 
-url    :http://www.kaishunworldz.com
+url    : http://www.kaishunworldz.com
 
 Github : https://github.com/KaiShunOleander
 
-Trello : https://trello.com/b/aSgcqTj2/opensimulator
+Project: https://github.com/users/KaiShunOleander/projects/1
