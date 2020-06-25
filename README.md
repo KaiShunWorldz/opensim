@@ -1,68 +1,97 @@
-# ansible-ksw-02
+# ansible role opensim
 ## Status: :bangbang: alpha ( not finished )
 
 
-Title : Ansible playbooks to generate a 3 server grid plus backups
-        Opensim 0.9.2 with MySQL 8.0.2
-==================================================================
+Title : Ansible playbooks to create a rubust or simulator server
+================================================================
 
-These playbooks will install and manage a three server opensimulator grid.
+These role will conforigure a system as either a robust or
+simulator server.
 
-( This is my first ansible project. Still learning.)
-
-Servers:
-  1) the grid server running the robust login service and the grid services
-  2) the asset server, running the robust asset and inventory services
-  3) the region server , running the simulator service
-  4) the backup server receiving daily compressed full backups from the robust servers
 
 Requirements
 ------------
 
-- This setup requires three Ubuntu servers. The name of these servers are listed
-  in the `infrastructure.cnf` file. The following setup has been used for this
-  configuration making use of Oracle VirtualBox.
-  - os-asset , 2 core, 3 GB Mem, 120 GB disk
-  - os-login , 1 core, 1 GB Mem,  16 GB disk
-  - os-region, 1 core, 4 Gb Mem,  60 GB disk
-  - os-backup, 1 core, 1 Gb Mem, 100 GB disk
+- Your infrastructure defenition has the following groups defined
+
+```INI
+[robust]
+<server-list>
+
+# All systems that will run simulator.exe
+[simulator]
+<region-server name>
+
+# All systems which will have the opensimulator binaries installed
+[opensim:children]
+robust
+simulator
+
+# All systems that will offer the grid services
+[grid_services]
+<grid server name>
+
+# All systems that will offer the asset and inventory service
+[asset_services]
+<asset server name>
+```
 
 - The servers need to have python installed, and `/usr/bin/phython3` available
 
 
 Configuration
 ------------
-- The grid is configured by setting the variables in `group_vars/all.yml`
-- You need to configure personal information such as usernames and passwords in
-  the folder ~/.vars/opensim/ ( See roles/simulator/tasks/variables.yml )
-- Port numbers for database backups are configures in `infrastructure.def`
-- The asset server will run a mysql database. The database and the system
-   account for the grid administrator are configured by setting the variables
-   in `group_vars/robust/all.yml`
-- The region server will run a mysql database to store simulator assets. The
-  database and the system account for the region server administrator are
-  configured by setting the variables in `group_vars/simulator/all.yml`    
-- The passwords of the database are kept in a vault. You either generate a new
-  vault for each group or define the vault_db_password variable in the groups_var
-  file with the other variables. The location of the file containing the vault
-  passphrase is configured in `ansible.cfg` ( Default contains 'VerySecret' )
-- Compressed database backup files are send to the backup system. The ports that
-  are used for these backups are configured in the file 'infrastructure.def'
+The grid can be configured by setting the variables in your `group_vars/all.yml` An example can be downloaded from :link: [ansible-ksw-02](https://github.com/KaiShunOleander/ansible-ksw-02)
 
-  Roles
-  ------
-- control        : install optional tools for the control host
-- baseline       : installs and configures packages common for all Servers
-- mysql          : installs and configures mysql and the database as storage provider
-                   for opensim  ( based on playbooks of geerlingguy
-- opensim        : install opensimulator from github and setup of system accounts
-- asset_services : configures the asset service and inventory service
-- grid_services  : configures all grid services
-- opensimulator  : configures the opensimulator             
-- percona        : installs percona tools and percona xtrabackup and qpress
-- db-backup      : schedules databases backups in `/etc/crontab`
+The variables are listed below along with the default values:
+
+```YAML
+host_version: os-ubuntu-2004
+git_bin: https://github.com/KaiShunOleander/{{ host_version }}
+
+admin_user: gridadmin
+admin_group: opensim
+conf_dir: config-default
+```
+
+`host_version`  is one of the opensim binanry distributions available on github. Which github account is set though the `git_bin` variable. These binaries are precompiled opensim versions for Linux platforms. 
+
+`admin_user` and `admin_group` are the operating system user name and group.
+
+`conf_dir` is the directory name where to store the .ini files for opensim. It is created under */home/{{ admin_user }}*
+
+```YAML
+db_name: opensim
+db_user: gridadmin
+db_password: gridadmin
+```
+
+MySQL databse name and credentials opensim hasto use. The creation of the database and its users is not part of this role. That should be done by using a mysql role.
 
 
+```YAML
+os_public_port: 8002
+os_private_port: 8003
+```
+
+The public and private ports opensim has to use.
+
+```YAML
+WelcomeMessage: "Welcome, Spirit!!!"
+gridname: "Ansible Generated Test Grid"
+gridnick: "AnsibleTest"
+gridmode: "grid"
+```
+
+The default welcome message, the name of the grid and the short nickname of the grid.
+
+```YAML
+db_name: opensim
+db_user: gridadmin
+db_password: "{{ vault_db_password }}"
+```
+
+ 
 Playbook tags
 ----------------
 - packages           : upgrade / install needed packages
@@ -75,23 +104,6 @@ Playbook tags
 - grid_login_service : configure login services for the grid
 - asset_service      : configure the asset service
 
-Playbooks
-----------
-- site.yml      : runs the complete installation
-- control.yml   : configures the control system
-- baseline.yml  : installs common tools and mono
-- opensim.yml   : configures all servers with the common settings and software
-- storage.yml   : configures the storage provider mysql
-- db-backup.yml : configures database backups
-- asset.yml     : configures robust with the asset and inventory services
-- grid.yml      : configures robust with the grid services
-- simulator.yml : configures the simulators with the opensim services
-
-
-- playbooks/
- -  info.yml          : shows basic information of a node in the network
- -  stack_status.yml  : shows service status of all services in the opensim stack
- -  stack_restart.yml : executes a controlled restart of the opensim stack
 
 License
 -------
