@@ -6,6 +6,6 @@
 
 - name: Install baseline
   apt: 
-    name: ['git', 'mono-complete'] 
+    name: ['git', 'tmux', 'mono-complete', 'restic'] 
     state: present
   tags: ['packages']

@@ -76,6 +76,15 @@
     mode: 0644
   tags: ['deploy']
 
+- name: Setup osslDefaultEnable.ini
+  template:
+    src: osslDefaultEnable.ini.j2
+    dest: "/home/{{ admin_user}}/{{ conf_dir }}//config-include/osslDefaultEnable.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
+  tags: ['deploy']
+
 - name: Generate  regionUUID for Welcome Sim
   command: uuidgen
   register: region_uuid

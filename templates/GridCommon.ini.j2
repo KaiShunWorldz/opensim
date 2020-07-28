@@ -68,10 +68,10 @@
 {% endif %}
 
 [AvatarService]
-    AvatarServerURI = "${{ avatar_node }}:{{ os_private_port }}"
+    AvatarServerURI = "http;//{{ avatar_node }}:{{ os_private_port }}"
 
 [AgentPreferencesService]
-    AgentPreferencesServerURI = "http://{{ agent_node }}:${Const|PrivatePort}"
+    AgentPreferencesServerURI = "http://{{ agent_node }}:{{ os_private_port }}"
 
 [PresenceService]
     PresenceServerURI = "http://{{ presence_node }}:{{ os_private_port }}"
@@ -121,3 +121,4 @@
 
 [MuteListService]
     MuteListServerURI = "http://{{ mute_node }}:{{ os_private_port }}"
+configuration

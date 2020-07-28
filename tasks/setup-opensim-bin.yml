@@ -11,9 +11,23 @@
     key_file: "/home/{{ admin_user }}/.ssh/id_rsa"
   tags: ['deploy']
 
-- name: Create configuration folders
-  file: path="/home/{{ admin_user }}/{{ conf_dir }}/config-include" state=directory
+- name: Create configuration folder
+  file:
+    path: "/home/{{ admin_user }}/{{ conf_dir }}"
+    state: directory
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
   changed_when: no
+  tags: ['deploy']
+
+- name: Create config-include folder
+  file:
+    path: "/home/{{ admin_user }}/{{ conf_dir }}/config-include"
+    state: directory
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+  changed_when: no
+  when: ansible_nodename in "{{ groups['simulator'] }}"
   tags: ['deploy']
 
 - name: unlink existing default opensim binaries

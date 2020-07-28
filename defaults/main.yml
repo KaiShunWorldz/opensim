@@ -1,1 +1,74 @@
+---
+
+
+host_version: os-ubuntu-2004
+git_bin: https://github.com/KaiShunOleander/{{ host_version }}
+
+admin_user: gridadmin
+admin_group: opensim
+sftp_user: gridfiles
+sftp_password: secret
+
+db_name: opensim
+db_user: gridadmin
+db_password: gridadmin
+
+# conf01 : One grid server, one asset server, one region server
+config_version: "01"
+
+asset_node: "os-asset"
+inventory_node: "os-asset"
+
+grid_node: "os-login"
+estate_node: "os-login"
+message_node: "os-login"
+avatar_node: "os-login"
+agent_node: "os-login"
+presence_node: "os-login"
+user_account_node: "os-login"
+grid_user_node: "os-login"
+friend_node: "os-login"
+authentication_node: "os-login"
+user_agent_node: "os-login"
+map_node: "os-login"
+user_profile_node: "os-login"
+mute_node: "os-login"
+
+# database
+
+db_backup_node: "os-backup"
+
+# Network
+
+os_public_port: 8002
+os_private_port: 8003
+
+# login service
+WelcomeMessage: "Welcome, Spirit!!!"
+
+# gridinfo service
+gridname: "Ansible Generated Test Grid"
+gridnick: "AnsibleTest"
+
+public_key: ~/.ssh/id_rsa.pub
+
+
+# gridmode is hypergrid of grid
+gridmode: "grid"
+
+# enable/disbale remote administration of regions. Credentials should be set
+# in the similator vault
+remote_admin_access: false
+
+
+# Voice , user credentials should be in ~/.vars/opensim/vivox.yml
+#         Format of vivox.yml
+#         ---
+#         vivox_server: www.osp.vivox.com
+#         vivox_sip_uri: osp.vivox.com
+#         vivox_admin_user: "vivox-user"
+#         vivox_admin_password: "vivox-password"
 #
+#         To obtain a username and password send an email to opensim@vivox.com
+
+vivox: false

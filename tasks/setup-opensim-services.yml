@@ -1,5 +1,24 @@
 ---
-# tasks file for grid_services
+# tasks for role opensim robust services
+
+# The opensim assets to be stored by FSassets. Default setting is that 
+# assets are stored on the same file system as the database ea.
+#  /vardb/mysql contains the database
+#  /vardb/fsassets the assets
+#  /vardb/backups the database and fsassets backup files
+#
+# To further increase performance these could be split over seperate disks
+
+- name: create fsassets folders
+  file:
+    path: "{{ db_assets }}/{{ item }}"
+    state: directory
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: "0750"
+  loop: ['data', 'tmp']
+  when: ansible_nodename in "{{ groups['asset_services'] }}"
+  tags: ['configure']
 
 - name: Copy Robust.ini file from template into opensim/bin directory.
   template:

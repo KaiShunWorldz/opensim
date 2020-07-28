@@ -19,3 +19,4 @@
 - name: add ssh keys for remote access by this control system
   authorized_key: user="{{ admin_user }}" key="{{ lookup('file', public_key) }}"
   tags: ['authenticate', 'configure']
+

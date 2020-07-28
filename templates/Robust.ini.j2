@@ -76,9 +76,9 @@
 
 [AssetService]
 
-    LocalServiceModule = "OpenSim.Services.AssetService.dll:AssetService"
-    BaseDirectory = "/home/{{ admin_user }}/fsassets/data"
-    SpoolDirectory = "home/{{ admin_user }}/fsassets/tmp"
+    LocalServiceModule = "OpenSim.Services.FSAssetService.dll:FSAssetConnector"
+    BaseDirectory = "{{ db_assets }}/data"
+    SpoolDirectory = "{{ db_assets }}/tmp"
 
 
     DefaultAssetLoader = "OpenSim.Framework.AssetLoader.Filesystem.dll"
