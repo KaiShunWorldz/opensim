@@ -28,12 +28,12 @@
 
 
 [ServiceList]
-{% if ansible_nodename == 'os-asset' %}
+{% if ansible_nodename in groups['asset_services'] %}
     AssetServiceConnector = "${Const|PrivatePort}/OpenSim.Server.Handlers.dll:AssetServiceConnector"
     InventoryInConnector = "${Const|PrivatePort}/OpenSim.Server.Handlers.dll:XInventoryInConnector"
 {% endif %}
 
-{% if ansible_nodename == 'os-login' %}
+{% if ansible_nodename in groups['login_services'] %}
 
     GridServiceConnector = "${Const|PrivatePort}/OpenSim.Server.Handlers.dll:GridServiceConnector"
     GridInfoServerInConnector = "${Const|PublicPort}/OpenSim.Server.Handlers.dll:GridInfoServerInConnector"
@@ -72,9 +72,10 @@
 
 
 
-{% if ansible_nodename == 'os-asset' %}
-
+{% if ansible_nodename in groups['asset_services'] %}
 [AssetService]
+
+    ;Realm = "fsassets"
 
     LocalServiceModule = "OpenSim.Services.FSAssetService.dll:FSAssetConnector"
     BaseDirectory = "{{ db_assets }}/data"
@@ -86,78 +87,119 @@
 
     AllowRemoteDelete = false
     AllowRemoteDeleteAllTypes = false
-
-
-[InventoryService]
-    LocalServiceModule = "OpenSim.Services.InventoryService.dll:XInventoryService"
-
-      AllowDelete = true
 {% endif %}
 
 
 
-{% if ansible_nodename == 'os-login' %}
+[InventoryService]
+
+    ; http://opensimulator.org/wiki/InventoryService
+
+{% if ansible_nodename in groups['inventory_services'] %}
+    LocalServiceModule = "OpenSim.Services.InventoryService.dll:XInventoryService"
+{% else %}
+        InventoryServerURI = "http://{{ inventory_node }}:{{ os_private_port}}"
+{% endif %}
+      AllowDelete = true
+
+
+[LibraryService]
+    LibraryName = "OpenSim Library"
+    DefaultLibrary = "./inventory/Libraries.xml"
+
+{% if ansible_nodename in groups['grid_services'] %}
 [GridService]
+
+    ; Realm = "regions"
+
     LocalServiceModule = "OpenSim.Services.GridService.dll:GridService"
 
-    Region_Welcome_Area = "DefaultRegion, FallbackRegion"
+    Region_Welcome = "DefaultRegion, FallbackRegion"
     ExportSupported = true
+{% endif %}
 
 [FreeswitchService]
     LocalServiceModule = "OpenSim.Services.FreeswitchService.dll:FreeswitchService"
 
 
+{% if ansible_nodename in groups['authentication_services'] %}
 [AuthenticationService]
+
+    ; Realm = "auth"
+
     LocalServiceModule = "OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService"
+{% endif %}
 
 
-
+{% if ansible_nodename in groups['openid_services'] %}
 [OpenIdService]
+
+    ; Realm = "users"
+
     AuthenticationServiceModule = "OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService"
     UserAccountServiceModule = "OpenSim.Services.UserAccountService.dll:UserAccountService"
+{% endif %}
 
-
+{% if ansible_nodename in groups['user_account_services'] %}
 [UserAccountService]
+
+    ; Realm = "UserAccounts" 
+
     LocalServiceModule = "OpenSim.Services.UserAccountService.dll:UserAccountService"
 
 
     AuthenticationService = "OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService"
     PresenceService = "OpenSim.Services.PresenceService.dll:PresenceService"
     GridService = "OpenSim.Services.GridService.dll:GridService"
-    InventoryService = "OpenSim.Services.InventoryService.dll:XInventoryService"
     AvatarService = "OpenSim.Services.AvatarService.dll:AvatarService"
     GridUserService = "OpenSim.Services.UserAccountService.dll:GridUserService"
 
+    ; Remote
+    nventoryService = "OpenSim.Services.Connectors.dll:XInventoryServicesConnector"
 
     CreateDefaultAvatarEntries = true
+{% endif %}
 
-
+{% if ansible_nodename in groups['grid_user_services'] %}
 [GridUserService]
     LocalServiceModule = "OpenSim.Services.UserAccountService.dll:GridUserService"
+{% endif %}
 
-
+{% if ansible_nodename in groups['agent_services'] %}
 [AgentPreferencesService]
     LocalServiceModule = "OpenSim.Services.UserAccountService.dll:AgentPreferencesService"
+{% endif %}
 
-
+{% if ansible_nodename in groups['presence_services'] %}
 [PresenceService]
     LocalServiceModule = "OpenSim.Services.PresenceService.dll:PresenceService"
+{% endif %}
 
+{% if ansible_nodename in groups['avatar_services'] %}
 [AvatarService]
     LocalServiceModule = "OpenSim.Services.AvatarService.dll:AvatarService"
+{% endif %}
 
-
+{% if ansible_nodename in groups['friend_services'] %}
 [FriendsService]
     LocalServiceModule = "OpenSim.Services.FriendsService.dll:FriendsService"
+
+[Messaging]
+    OfflineIMService = "OpenSim.Addons.OfflineIM.dll:OfflineIMService"
+
+[Groups]
+    MaxAgentGroups = 42
+
+[MuteListService]
+  LocalServiceModule = "OpenSim.Services.MuteListService.dll:MuteListService"
+{% endif %}
 
 [EstateService]
     LocalServiceModule = "OpenSim.Services.EstateService.dll:EstateDataService"
 
-[LibraryService]
-    LibraryName = "OpenSim Library"
-    DefaultLibrary = "./inventory/Libraries.xml"
 
 
+{% if ansible_nodename in groups['login_services'] %}
 [LoginService]
 
     LocalServiceModule = "OpenSim.Services.LLLoginService.dll:LLLoginService"
@@ -165,7 +207,6 @@
     UserAccountService = "OpenSim.Services.UserAccountService.dll:UserAccountService"
     GridUserService = "OpenSim.Services.UserAccountService.dll:GridUserService"
     AuthenticationService = "OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService"
-    InventoryService = "OpenSim.Services.InventoryService.dll:XInventoryService"
     AvatarService = "OpenSim.Services.AvatarService.dll:AvatarService"
     PresenceService = "OpenSim.Services.PresenceService.dll:PresenceService"
     GridService = "OpenSim.Services.GridService.dll:GridService"
@@ -173,6 +214,8 @@
     LibraryService = "OpenSim.Services.InventoryService.dll:LibraryService"
     FriendsService = "OpenSim.Services.FriendsService.dll:FriendsService"
 
+    ;Remote
+    InventoryService = "OpenSim.Services.Connectors.dll:XInventoryServicesConnector"
 
     MinLoginLevel = 0
 
@@ -180,10 +223,18 @@
     AllowRemoteSetLoginLevel = "false"
     MapTileURL = "${Const|BaseURL}:${Const|PublicPort}/";
     DSTZone = "America/Los_Angeles;Pacific Standard Time"
+{% endif %}
 
+{% if ansible_nodename in groups['map_services'] %}
 [MapImageService]
     LocalServiceModule = "OpenSim.Services.MapImageService.dll:MapImageService"
+{% endif %}
 
+[BakedTextureService]
+    LocalServiceModule = "OpenSim.Server.Handlers.dll:XBakes"
+    BaseDirectory = "./bakes"
+
+{% if ansible_nodename in groups['grid_info_services'] %}
 [GridInfoService]
 
     login = ${Const|BaseURL}:${Const|PublicPort}
@@ -195,26 +246,24 @@
     register = ${Const|BaseURL}/register
     help = ${Const|BaseURL}/help
     password = ${Const|BaseURL}/password
-
-[Messaging]
-    OfflineIMService = "OpenSim.Addons.OfflineIM.dll:OfflineIMService"
-
-[Groups]
-    MaxAgentGroups = 42
+{% endif %}
 
 
+
+{% if ansible_nodename in groups['user_profile_services'] %}
 [UserProfilesService]
+
+    ; Realm = "UserProfiles"
+
     LocalServiceModule = "OpenSim.Services.UserProfilesService.dll:UserProfilesService"
     Enabled = false
 
     UserAccountService = OpenSim.Services.UserAccountService.dll:UserAccountService
     AuthenticationServiceModule = "OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService"
-
-
-[BakedTextureService]
-    LocalServiceModule = "OpenSim.Server.Handlers.dll:XBakes"
-    BaseDirectory = "./bakes"
-
-[MuteListService]
-  LocalServiceModule = "OpenSim.Services.MuteListService.dll:MuteListService"
 {% endif %}
+
+
+
+
+
+
